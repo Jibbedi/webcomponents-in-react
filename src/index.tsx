@@ -2,6 +2,8 @@ import React from "react";
 
 declare type OverrideProps = { [reactEventName: string]: string };
 
+const DEFAULT_EVENT_PREFIX = "on";
+
 export const adapt = (
   componentSelector: string,
   overrideProps?: OverrideProps
@@ -11,7 +13,7 @@ export const adapt = (
 
     eventListeners: {
       [id: string]: EventListenerOrEventListenerObject;
-    } | null = {};
+    } = {};
 
     componentDidMount() {
       this.setUpEventListeners();
@@ -20,6 +22,8 @@ export const adapt = (
 
     componentDidUpdate() {
       this.updatePropertiesForRichData();
+      this.removeEventListeners();
+      this.setUpEventListeners();
     }
 
     componentWillUnmount() {
@@ -32,7 +36,7 @@ export const adapt = (
       }
 
       // onChange -> change
-      return key.substr(2).toLowerCase();
+      return key.substr(DEFAULT_EVENT_PREFIX.length).toLowerCase();
     }
 
     mapKeyToPropertyName(key: string) {
@@ -48,18 +52,21 @@ export const adapt = (
     }
 
     removeEventListeners() {
-      for (let key in this.eventListeners!) {
-        const handler = this.eventListeners![key];
+      for (let key in this.eventListeners) {
+        const handler = this.eventListeners[key];
         this.ref!.removeEventListener(this.mapKeyToEventName(key), handler);
       }
-      this.eventListeners = null;
+      this.eventListeners = {};
     }
 
     setUpEventListeners() {
       for (let key in this.props) {
         const handler = this.props[key];
 
-        if (key.indexOf(`on`) === -1 && !this.shouldKeyBeMapped(key)) {
+        if (
+          key.indexOf(DEFAULT_EVENT_PREFIX) === -1 &&
+          !this.shouldKeyBeMapped(key)
+        ) {
           continue;
         }
 
