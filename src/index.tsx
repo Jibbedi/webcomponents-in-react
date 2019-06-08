@@ -75,7 +75,7 @@ export const adapt = (
           continue;
         }
 
-        this.eventListeners![key] = handler;
+        this.eventListeners[key] = handler;
         this.ref!.addEventListener(this.mapKeyToEventName(key), handler);
       }
     }
