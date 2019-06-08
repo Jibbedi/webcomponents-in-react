@@ -82,7 +82,7 @@ const App = () => {
             </MyCalendar>
 
             <RegularReactComponent  value={richDataState} 
-                                    onChange={e => etRichDataState(e)}>
+                                    onChange={e => setRichDataState(e)}>
             </RegularReactComponent>
         </div>
     )
