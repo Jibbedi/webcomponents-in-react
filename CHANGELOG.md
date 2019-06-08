@@ -1,3 +1,6 @@
+## 0.0.3 (June 9, 2019)
+- fixed issue that caused old event listener to trigger
+
 ## 0.0.2 (June 8, 2019)
 - added support for event handling
 - added support for rich data processing

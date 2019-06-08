@@ -1,6 +1,6 @@
 {
   "name": "webcomponents-in-react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Use web components in React as if they were regular React components. Zero dependencies adapter.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
