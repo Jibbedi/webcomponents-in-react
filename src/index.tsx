@@ -4,7 +4,7 @@ declare type OverrideProps = { [reactEventName: string]: string };
 
 export const adapt = (
   componentSelector: string,
-  overrideProps: OverrideProps
+  overrideProps?: OverrideProps
 ) => {
   return class Adapter extends React.Component<any> {
     ref: HTMLElement | null = null;
@@ -41,7 +41,7 @@ export const adapt = (
 
     mapKeyToEventName(key: string) {
       if (this.shouldKeyBeMapped(key)) {
-        return overrideProps[key];
+        return overrideProps![key];
       }
 
       // onChange -> change
@@ -49,7 +49,7 @@ export const adapt = (
     }
 
     shouldKeyBeMapped(key: string) {
-      return !!overrideProps[key];
+      return overrideProps ? !!overrideProps[key] : false;
     }
 
     render() {
