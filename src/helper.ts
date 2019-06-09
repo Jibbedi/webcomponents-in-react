@@ -1,5 +1,6 @@
 import { OverrideProps } from "./interfaces";
 import { DEFAULT_EVENT_PREFIX } from "./constants";
+import { isFunction } from "util";
 
 export const filterOutRichData = (
   props: any,
@@ -8,7 +9,7 @@ export const filterOutRichData = (
   return Object.keys(props).reduce(
     (filteredProps, propKey) => {
       const value = props[propKey];
-      if (!isRichData(value)) {
+      if (!isRichData(value) || propKey === "children") {
         filteredProps[mapKeyToPropertyName(propKey, overrideProps)] = value;
       }
       return filteredProps;
@@ -18,7 +19,7 @@ export const filterOutRichData = (
 };
 
 export const isRichData = (prop: any) => {
-  return typeof prop === "object";
+  return typeof prop === "object" || typeof prop === "function";
 };
 
 export const mapKeyToEventName = (

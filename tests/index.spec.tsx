@@ -10,11 +10,16 @@ const removeEventListener = jest.fn();
 const primitiveDataSetter = jest.fn();
 const mappedDataSetter = jest.fn();
 const richDataSetter = jest.fn();
+const functionDataSetter = jest.fn();
 
 class MockWebComponent extends React.Component<any> {
   addEventListener = addEventListener;
 
   removeEventListener = removeEventListener;
+
+  set functionData(value) {
+    functionDataSetter(value);
+  }
 
   set richData(value) {
     richDataSetter(value);
@@ -34,6 +39,7 @@ class MockWebComponent extends React.Component<any> {
         <div>Hello World!</div>
         <div>{this.props.primitiveData}</div>
         <div>{this.props.data}</div>
+        <div>{this.props.children}</div>
       </>
     );
   }
@@ -66,6 +72,12 @@ test("it should call setter for rich data", () => {
   const obj = { foo: 1 };
   render(<AdaptedComponent richData={obj} />);
   expect(richDataSetter).toHaveBeenCalledWith(obj);
+});
+
+test("it should call setter for function data", () => {
+  const fun = () => null;
+  render(<AdaptedComponent functionData={fun} />);
+  expect(functionDataSetter).toHaveBeenCalledWith(fun);
 });
 
 test("it should not call setter for primitive data, but pass in as prop instead", () => {
@@ -109,4 +121,15 @@ test("it should not call addEventListener if value is not a function", () => {
   const onInput = 1;
   render(<AdaptedComponentWithoutOverrides onInput={onInput} />);
   expect(addEventListener).not.toHaveBeenCalled();
+});
+
+test("it should render slot", () => {
+  const slottedText = "slotted";
+  const { getByText } = render(
+    <AdaptedComponent>
+      <div>{slottedText}</div>
+    </AdaptedComponent>
+  );
+
+  expect(getByText(slottedText)).toBeTruthy();
 });
