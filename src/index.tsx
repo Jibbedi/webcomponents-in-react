@@ -41,7 +41,6 @@ export const adapt = (
           }
 
           if (typeof handler !== `function`) {
-            console.warn(`The prop ${key} is not a function.`);
             continue;
           }
 
@@ -75,7 +74,7 @@ export const adapt = (
 
     return React.createElement(componentSelector, {
       ref: (ref: HTMLElement) => (webComponentRef.current = ref),
-      ...filterOutRichData(props)
+      ...filterOutRichData(props, overrideProps)
     });
   };
 };

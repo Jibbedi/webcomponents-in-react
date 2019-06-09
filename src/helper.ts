@@ -1,12 +1,15 @@
 import { OverrideProps } from "./interfaces";
 import { DEFAULT_EVENT_PREFIX } from "./constants";
 
-export const filterOutRichData = (props: any) => {
+export const filterOutRichData = (
+  props: any,
+  overrideProps?: OverrideProps
+) => {
   return Object.keys(props).reduce(
     (filteredProps, propKey) => {
       const value = props[propKey];
       if (!isRichData(value)) {
-        filteredProps[propKey] = value;
+        filteredProps[mapKeyToPropertyName(propKey, overrideProps)] = value;
       }
       return filteredProps;
     },
