@@ -38,9 +38,6 @@ Use web components in React as if they were regular React components. Zero depen
 - [Passing Data](#passing-data)
 - [Advanced Usages](#advanced-usages)
 - [Examples](#examples)
-  - [🔗 Basic Usage](#%F0%9F%94%97-basic-usage)
-  - [🔗 Passing Data](#%F0%9F%94%97-passing-data)
-  - [🔗 Override Mapping](#%F0%9F%94%97-override-mapping)
 
 
 ## The Problem
@@ -170,13 +167,13 @@ And also map the React component's `value` prop to the web component's data prop
 
 ## Examples
 
-### [🔗 Basic Usage](https://codesandbox.io/s/throbbing-breeze-isr7w)
+### [🔗 Basic Usage](https://codesandbox.io/s/throbbing-breeze-isr7w)  <!-- omit in toc -->
 > This is a good starting point, to learn how to get started with using your web components inside of react
 
-### [🔗 Passing Data](https://codesandbox.io/s/priceless-rosalind-sykw6)
+### [🔗 Passing Data](https://codesandbox.io/s/priceless-rosalind-sykw6)  <!-- omit in toc -->
 > Learn how to pass rich data like arrays and objects into your web component
 
-### [🔗 Override Mapping](https://codesandbox.io/s/flamboyant-snowflake-047d5)
+### [🔗 Override Mapping](https://codesandbox.io/s/flamboyant-snowflake-047d5)  <!-- omit in toc -->
 > Learn how to override event and props mapping to customize the adapter to your needs
 
 
