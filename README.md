@@ -21,10 +21,11 @@ Use web components in React as if they were regular React components. Zero depen
 
 ## Features <!-- omit in toc -->
 
-- Use your web component seamlessly inside of React
-- Declaratively listen to your web component's event in React. 
-- Pass rich data (like objects and arrays) from your React components to your web component
-- Remove the need to use `Refs`
+✅ Use your web component seamlessly inside of React <br>
+✅ Declaratively listen to your web component's event in React. <br>
+✅ Pass rich data (like objects and arrays) from your React components to your web component<br>
+✅ Remove the need to use `Refs`<br>
+✅ Compatible with native web components, Stencil.js, Polymer, Angular Elements and many others<br>
 
 
 ## Table of contents <!-- omit in toc -->
