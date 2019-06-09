@@ -1,3 +1,6 @@
+## 1.0.0 (June 9, 2019)
+- initial release
+
 ## 0.0.3 (June 9, 2019)
 - fixed issue that caused old event listener to trigger
 
