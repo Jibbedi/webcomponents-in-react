@@ -165,8 +165,7 @@ const MyComponent = adapt("my-component", {
 ```
 
 This will now call the `onChange` handler of your React component every time that the web components fires an `input` event.
-
-Note: All events you don't explicitly override will continue to follow the default behavior.
+And also map the React component's `value` prop to the web component's data property/attribute.
 
 
 ## Examples
