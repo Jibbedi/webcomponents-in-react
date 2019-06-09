@@ -13,7 +13,7 @@ Use web components in React as if they were regular React components. Zero depen
 [![License](https://img.shields.io/npm/l/webcomponents-in-react.svg?style=flat)](https://github.com/Jibbedi/webcomponents-in-react/blob/master/LICENSE)
 [![Version](https://img.shields.io/npm/v/webcomponents-in-react.svg?style=flat)](https://www.npmjs.com/package/webcomponents-in-react)
 [![Types](https://img.shields.io/npm/types/webcomponents-in-react.svg?style=flat)](https://www.npmjs.com/package/webcomponents-in-react)
-[![Size](https://img.shields.io/bundlephobia/min/webcomponents-in-react.svg?style=flat)](https://www.npmjs.com/package/webcomponents-in-react)
+[![Size](https://img.shields.io/bundlephobia/min/webcomponents-in-react.svg?style=flat)](https://bundlephobia.com/result?p=webcomponents-in-react)
 [![Dependencies](https://img.shields.io/badge/Dependencies-None-brightgreen.svg?style=flat)](https://www.npmjs.com/package/webcomponents-in-react)
 [![Pull Requests welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com/)
 [![Downloads](https://img.shields.io/npm/dm/webcomponents-in-react.svg?style=flat)](https://www.npmjs.com/package/webcomponents-in-react)
