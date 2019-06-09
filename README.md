@@ -37,6 +37,10 @@ Use web components in React as if they were regular React components. Zero depen
 - [Handling Events](#handling-events)
 - [Passing Data](#passing-data)
 - [Advanced Usages](#advanced-usages)
+- [Examples](#examples)
+  - [🔗 Basic Usage](#%F0%9F%94%97-basic-usage)
+  - [🔗 Passing Data](#%F0%9F%94%97-passing-data)
+  - [🔗 Override Mapping](#%F0%9F%94%97-override-mapping)
 
 
 ## The Problem
@@ -134,7 +138,13 @@ Please check [advanced usages](#advanced-usages) to learn how to adjust the name
 
 ## Passing Data
 
-You can pass in any data to the React Component. It will make sure to pass in primitive data as attributes as well as rich data as properties.
+You can pass in any data to the React Component. 
+
+Any primitive data will be passed as attributes, while rich data (like objects, arrays and functions) will be passed as a property 
+to your web component.
+
+It's also possible to map data property names.
+Please check [advanced usages](#advanced-usages) to learn how to adjust the name mapping to your needs.
 
 
 ## Advanced Usages
@@ -143,17 +153,34 @@ If your web component follow a different naming convention you can override the 
 
 You can simply pass in a map with the `key` being the event's name of your React Component and the `value` representing the web component's event name.
 
+The same behavior is true for properties.
+
 ```jsx
 import {adapt} from "webcomponents-in-react"
 
 const MyComponent = adapt("my-component", {
-    "onChange" : "input"
+    "onChange" : "input",
+    "value" : "data"
 })
 ```
 
 This will now call the `onChange` handler of your React component every time that the web components fires an `input` event.
 
 Note: All events you don't explicitly override will continue to follow the default behavior.
+
+
+## Examples
+
+### [🔗 Basic Usage](https://codesandbox.io/s/throbbing-breeze-isr7w)
+> This is a good starting point, to learn how to get started with using your web components inside of react
+
+### [🔗 Passing Data](https://codesandbox.io/s/priceless-rosalind-sykw6)
+> Learn how to pass rich data like arrays and objects into your web component
+
+### [🔗 Override Mapping](https://codesandbox.io/s/flamboyant-snowflake-047d5)
+> Learn how to override event and props mapping to customize the adapter to your needs
+
+
 
 
 
