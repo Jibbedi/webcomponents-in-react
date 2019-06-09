@@ -12,6 +12,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
     "pretty": true,
     "removeComments": true,
     "sourceMap": true,

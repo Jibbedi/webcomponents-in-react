@@ -1,117 +1,81 @@
-import React from "react";
-
-declare type OverrideProps = { [reactEventName: string]: string };
-
-const DEFAULT_EVENT_PREFIX = "on";
+import React, { useEffect, useRef, memo } from "react";
+import {
+  filterOutRichData,
+  isRichData,
+  mapKeyToPropertyName,
+  mapKeyToEventName,
+  shouldKeyBeMapped
+} from "./helper";
+import { OverrideProps, EventListenerMap } from "./interfaces";
+import { DEFAULT_EVENT_PREFIX } from "./constants";
 
 export const adapt = (
   componentSelector: string,
   overrideProps?: OverrideProps
 ) => {
-  return class Adapter extends React.Component<any> {
-    ref: HTMLElement | null = null;
+  return (props: any) => {
+    const webComponentRef = useRef<HTMLElement | null>(null);
 
-    eventListeners: {
-      [id: string]: EventListenerOrEventListenerObject;
-    } = {};
+    useEffect(() => {
+      const eventListeners: EventListenerMap = {};
 
-    componentDidMount() {
-      this.setUpEventListeners();
-      this.updatePropertiesForRichData();
-    }
-
-    componentDidUpdate() {
-      this.updatePropertiesForRichData();
-      this.removeEventListeners();
-      this.setUpEventListeners();
-    }
-
-    componentWillUnmount() {
-      this.removeEventListeners();
-    }
-
-    mapKeyToEventName(key: string) {
-      if (this.shouldKeyBeMapped(key)) {
-        return overrideProps![key];
-      }
-
-      // onChange -> change
-      return key.substr(DEFAULT_EVENT_PREFIX.length).toLowerCase();
-    }
-
-    mapKeyToPropertyName(key: string) {
-      if (this.shouldKeyBeMapped(key)) {
-        return overrideProps![key];
-      }
-
-      return key;
-    }
-
-    shouldKeyBeMapped(key: string) {
-      return overrideProps ? !!overrideProps[key] : false;
-    }
-
-    removeEventListeners() {
-      for (let key in this.eventListeners) {
-        const handler = this.eventListeners[key];
-        this.ref!.removeEventListener(this.mapKeyToEventName(key), handler);
-      }
-      this.eventListeners = {};
-    }
-
-    setUpEventListeners() {
-      for (let key in this.props) {
-        const handler = this.props[key];
-
-        if (
-          key.indexOf(DEFAULT_EVENT_PREFIX) === -1 &&
-          !this.shouldKeyBeMapped(key)
-        ) {
-          continue;
+      const removeEventListeners = () => {
+        for (let key in eventListeners) {
+          const handler = eventListeners[key];
+          webComponentRef.current!.removeEventListener(
+            mapKeyToEventName(key, overrideProps),
+            handler
+          );
         }
+      };
 
-        if (typeof handler !== `function`) {
-          console.warn(`The prop ${key} is not a function.`);
-          continue;
-        }
+      const setUpEventListeners = () => {
+        for (let key in props) {
+          const handler = props[key];
 
-        this.eventListeners[key] = handler;
-        this.ref!.addEventListener(this.mapKeyToEventName(key), handler);
-      }
-    }
-
-    updatePropertiesForRichData() {
-      for (let key in this.props) {
-        const data = this.props[key];
-        if (!this.isRichData(data)) {
-          continue;
-        }
-        (this.ref as any)![this.mapKeyToPropertyName(key)] = data;
-      }
-    }
-
-    filterOutRichData(props: any) {
-      return Object.keys(props).reduce(
-        (filteredProps, propKey) => {
-          const value = props[propKey];
-          if (!this.isRichData(value)) {
-            filteredProps[propKey] = value;
+          if (
+            key.indexOf(DEFAULT_EVENT_PREFIX) === -1 &&
+            !shouldKeyBeMapped(key, overrideProps)
+          ) {
+            continue;
           }
-          return filteredProps;
-        },
-        {} as any
-      );
-    }
 
-    isRichData(prop: any) {
-      return typeof prop === "object";
-    }
+          if (typeof handler !== `function`) {
+            console.warn(`The prop ${key} is not a function.`);
+            continue;
+          }
 
-    render() {
-      return React.createElement(componentSelector, {
-        ref: (ref: HTMLElement) => (this.ref = ref),
-        ...this.filterOutRichData(this.props)
-      });
-    }
+          eventListeners[key] = handler;
+          webComponentRef.current!.addEventListener(
+            mapKeyToEventName(key, overrideProps),
+            handler
+          );
+        }
+      };
+
+      const updatePropertiesForRichData = () => {
+        for (let key in props) {
+          const data = props[key];
+          if (!isRichData(data)) {
+            continue;
+          }
+          webComponentRef.current![
+            mapKeyToPropertyName(key, overrideProps)
+          ] = data;
+        }
+      };
+
+      setUpEventListeners();
+      updatePropertiesForRichData();
+
+      return () => {
+        removeEventListeners();
+      };
+    });
+
+    return React.createElement(componentSelector, {
+      ref: (ref: HTMLElement) => (webComponentRef.current = ref),
+      ...filterOutRichData(props)
+    });
   };
 };
