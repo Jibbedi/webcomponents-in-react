@@ -1,6 +1,5 @@
 import { OverrideProps } from "./interfaces";
 import { DEFAULT_EVENT_PREFIX } from "./constants";
-import { isFunction } from "util";
 
 export const filterOutRichData = (
   props: any,

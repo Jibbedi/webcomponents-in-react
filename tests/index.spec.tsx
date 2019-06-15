@@ -11,11 +11,16 @@ const primitiveDataSetter = jest.fn();
 const mappedDataSetter = jest.fn();
 const richDataSetter = jest.fn();
 const functionDataSetter = jest.fn();
+const childrenDataSetter = jest.fn();
 
 class MockWebComponent extends React.Component<any> {
   addEventListener = addEventListener;
 
   removeEventListener = removeEventListener;
+
+  set children(value) {
+    childrenDataSetter(value);
+  }
 
   set functionData(value) {
     functionDataSetter(value);
@@ -123,7 +128,7 @@ test("it should not call addEventListener if value is not a function", () => {
   expect(addEventListener).not.toHaveBeenCalled();
 });
 
-test("it should render slot", () => {
+test("it should render slot and not call children setter", () => {
   const slottedText = "slotted";
   const { getByText } = render(
     <AdaptedComponent>
@@ -132,4 +137,5 @@ test("it should render slot", () => {
   );
 
   expect(getByText(slottedText)).toBeTruthy();
+  expect(childrenDataSetter).not.toHaveBeenCalled();
 });

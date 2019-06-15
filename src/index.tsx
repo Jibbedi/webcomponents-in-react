@@ -55,7 +55,7 @@ export const adapt = (
       const updatePropertiesForRichData = () => {
         for (let key in props) {
           const data = props[key];
-          if (!isRichData(data)) {
+          if (!isRichData(data) || key === "children") {
             continue;
           }
           webComponentRef.current![
