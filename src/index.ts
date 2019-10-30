@@ -9,11 +9,11 @@ import {
 import { OverrideProps, EventListenerMap } from "./interfaces";
 import { DEFAULT_EVENT_PREFIX } from "./constants";
 
-export const adapt = (
+export const adapt = <T>(
   componentSelector: string,
   overrideProps?: OverrideProps
 ) => {
-  return (props: any) => {
+  return (props: T & EventListenerMap) => {
     const webComponentRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
