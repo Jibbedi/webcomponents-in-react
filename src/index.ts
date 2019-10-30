@@ -9,7 +9,7 @@ import {
 import { OverrideProps, EventListenerMap } from "./interfaces";
 import { DEFAULT_EVENT_PREFIX } from "./constants";
 
-export const adapt = <T>(
+export const adapt = <T = any>(
   componentSelector: string,
   overrideProps?: OverrideProps
 ) => {
