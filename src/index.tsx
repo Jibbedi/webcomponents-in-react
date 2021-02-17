@@ -22,10 +22,12 @@ export const adapt = (
       const removeEventListeners = () => {
         for (let key in eventListeners) {
           const handler = eventListeners[key];
-          webComponentRef.current!.removeEventListener(
-            mapKeyToEventName(key, overrideProps),
-            handler
-          );
+          if (webComponentRef.current) {
+            webComponentRef.current.removeEventListener(
+                mapKeyToEventName(key, overrideProps),
+                handler
+            );
+          }
         }
       };
 
